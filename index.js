@@ -2,7 +2,11 @@ var axios = require("axios");
 var fs = require("fs");
 var base64 = require("base-64");
 
-let token = "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";
+
+// token is getting removed automatically in my github if not working mail me on
+// jadhavsaurabh156@gmail.com
+// and i will generate new code and send
+let token = "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";
 
 var content = base64.encode("updating txt in file");
 console.log(content);
