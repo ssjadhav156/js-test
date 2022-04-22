@@ -41,7 +41,7 @@ async function updateFile(token, content) {
     }),
   })
     .then(function (response) {
-      // console.log(JSON.stringify(response.data));
+      // console.log(response.data);
       console.log("File updated");
     })
     .catch(function (err) {
