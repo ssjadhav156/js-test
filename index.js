@@ -1,12 +1,15 @@
 var axios = require("axios");
+var fs = require("fs");
 var base64 = require("base-64");
 
 let token = "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";
 
-var content = base64.encode("Hello there!");
+let file = fs.readFileSync("jstest.txt").toString();
+console.log(file);
+var content = base64.encode(file);
 console.log(content);
 
-updateFile(token, content);
+// updateFile(token, content);
 
 function updateFile(token, content) {
   axios({
