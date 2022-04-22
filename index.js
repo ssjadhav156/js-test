@@ -11,7 +11,7 @@ console.log(content);
 
 updateFile(token, content);
 
-function updateFile(token, content) {
+async function updateFile(token, content) {
   // const res = await axios.get("https://api.github.com/repos/ssjadhav156/js-test/contents/jstest.txt");
 
  let sha = ""
@@ -22,7 +22,7 @@ function updateFile(token, content) {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     }
-  }).then(res => console.log(res))
+  }).then(res => console.log(res.data))
 
 
   // await axios({
