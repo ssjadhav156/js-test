@@ -7,7 +7,7 @@ const utf8 = require("utf8");
 // token is getting removed automatically in my github if not working mail me on
 // jadhavsaurabh156@gmail.com
 // and i will generate new code and send
-let token = "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";
+let token = "TOKEN HERE";
 
 let content = "hello world";
 
@@ -44,30 +44,30 @@ async function updateFile(token, content) {
 
       // and now you get the resulting hash
       // newData = hash.read();
-      newData=txtdata + " " + content
+      newData=base64.encode(txtdata + " " + content);
       console.log(newData);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.message + ": " +err.response.statusText));
 
-  // axios({
-  //   method: "put",
-  //   url: "https://api.github.com/repos/ssjadhav156/js-test/contents/jstest.txt",
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //     "Content-Type": "application/json",
-  //   },
+  axios({
+    method: "put",
+    url: "https://api.github.com/repos/ssjadhav156/js-test/contents/jstest.txt",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
 
-  //   data: JSON.stringify({
-  //     message: "js test",
-  //     content: `${newData}`,
-  //     sha: sha,
-  //   }),
-  // })
-  //   .then(function (response) {
-  //     // console.log(response.data);
-  //     console.log("File updated");
-  //   })
-  //   .catch(function (err) {
-  //     console.log(err);
-  //   });
+    data: JSON.stringify({
+      message: "Updating file",
+      content: `${newData}`,
+      sha: sha,
+    }),
+  })
+    .then(function (response) {
+      // console.log(response.data);
+      console.log("File updated");
+    })
+    .catch(function (err) {
+      console.log(err.message + ": " +err.response.statusText);
+    });
 }
