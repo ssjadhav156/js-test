@@ -1,21 +1,22 @@
-var axios = require("axios");
-var fs = require("fs");
-var base64 = require("base-64");
-
+const axios = require("axios");
+const fs = require("fs");
+const base64 = require("base-64");
+const crypto = require("crypto");
+const utf8 = require("utf8");
 
 // token is getting removed automatically in my github if not working mail me on
 // jadhavsaurabh156@gmail.com
 // and i will generate new code and send
-let token = "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";
+let token = "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";
 
-var content = base64.encode("updating txt in file");
-console.log(content);
+let content = "hello world";
 
 updateFile(token, content);
 
 async function updateFile(token, content) {
-
   let sha = "";
+  let txtdata = "";
+  let newData = "";
   await axios({
     method: "get",
     url: "https://api.github.com/repos/ssjadhav156/js-test/contents/jstest.txt",
@@ -27,28 +28,46 @@ async function updateFile(token, content) {
     .then((res) => {
       // console.log(res.data);
       sha = res.data.sha;
+      // var hash = crypto.createHash("sha1");
+
+      // change to 'binary' if you want a binary hash.
+      // hash.setEncoding("base64");
+
+      let olddata = base64.decode(res.data.content);
+      txtdata = utf8.decode(olddata); //  || JSON.stringify(create_body) || create_file2.body|| 'hello world');
+
+      // the text that you want to hash
+      // hash.write(txtdata + " " + content);
+
+      // very important! You cannot read from the stream until you have called end()
+      // hash.end();
+
+      // and now you get the resulting hash
+      // newData = hash.read();
+      newData=txtdata + " " + content
+      console.log(newData);
     })
     .catch((err) => console.log(err));
 
-  axios({
-    method: "put",
-    url: "https://api.github.com/repos/ssjadhav156/js-test/contents/jstest.txt",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
+  // axios({
+  //   method: "put",
+  //   url: "https://api.github.com/repos/ssjadhav156/js-test/contents/jstest.txt",
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //     "Content-Type": "application/json",
+  //   },
 
-    data: JSON.stringify({
-      message: "js test",
-      content: `${content}`,
-      sha: sha
-    }),
-  })
-    .then(function (response) {
-      // console.log(response.data);
-      console.log("File updated");
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+  //   data: JSON.stringify({
+  //     message: "js test",
+  //     content: `${newData}`,
+  //     sha: sha,
+  //   }),
+  // })
+  //   .then(function (response) {
+  //     // console.log(response.data);
+  //     console.log("File updated");
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err);
+  //   });
 }
